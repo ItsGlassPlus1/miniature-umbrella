@@ -1,44 +1,48 @@
 # Manifest Format Guide
 
-This guide documents the manifest format conventions used in this Scoop bucket, particularly for advanced features like multiple URLs and hashes.
+This guide documents the manifest format conventions used in this Scoop bucket.
 
-## Multiple URLs and Hashes
+## Downloading Multiple Files
 
-Scoop manifests support downloading multiple files for a single package installation. This is useful when you need:
-- A main application archive
-- Additional scripts or configuration files
-- Helper utilities
+When your application requires multiple files (e.g., an archive plus additional scripts), use the appropriate Scoop manifest fields:
 
-### Syntax
+### Using pre_install for Additional Files
 
-When specifying multiple URLs and hashes, use JSON array syntax:
+When you need to download a helper script or additional file alongside your main archive:
+
+```json
+{
+    "architecture": {
+        "64bit": {
+            "url": "https://example.com/app-v1.0.0.zip",
+            "hash": "abc123..."
+        }
+    },
+    "pre_install": [
+        "Invoke-WebRequest -Uri 'https://example.com/helper-script.ps1' -OutFile \"$dir\\helper-script.ps1\""
+    ]
+}
+```
+
+### Mirror URLs (Redundancy)
+
+If you have multiple URLs pointing to the **same file** (mirrors for redundancy), use an array:
 
 ```json
 {
     "architecture": {
         "64bit": {
             "url": [
-                "https://example.com/app-v1.0.0.zip",
-                "https://example.com/helper-script.ps1"
+                "https://mirror1.example.com/app-v1.0.0.zip",
+                "https://mirror2.example.com/app-v1.0.0.zip"
             ],
-            "hash": [
-                "abc123...",
-                "def456..."
-            ]
+            "hash": "abc123..."
         }
     }
 }
 ```
 
-### Requirements
-
-1. **Array Format**: Both `url` and `hash` must be arrays (use `[]`, not `{}`)
-2. **Count Matching**: The number of URLs must match the number of hashes
-3. **Hash Format**: Hashes can be:
-   - Plain SHA-256 (64 hex characters) - default
-   - Plain SHA-512 (128 hex characters)
-   - Prefixed format: `md5:...`, `sha1:...`, `sha256:...`, `sha512:...`
-4. **Autoupdate Consistency**: When using autoupdate, ensure all URLs are included in the autoupdate section
+**Note**: All URLs in the array must point to the same file and share the same hash.
 
 ### Example: suwayomi-server-preview.json
 
@@ -47,45 +51,31 @@ When specifying multiple URLs and hashes, use JSON array syntax:
     "version": "2.1.2038",
     "architecture": {
         "64bit": {
-            "url": [
-                "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v$version/Suwayomi-Server-v$version-windows-x64.zip",
-                "https://github.com/ScoopInstaller/Extras/raw/master/scripts/suwayomi-server/suwayomi.ps1"
-            ],
-            "hash": [
-                "ff86f6fe69a61281a7946a855b0fe195fd6c587836a875a3f9daddc4105d4cc3",
-                "f7d32050ace8bcb05005a65da1dae174e3eeca86a370e769639f5c0d03e61629"
-            ]
+            "url": "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v$version/Suwayomi-Server-v$version-windows-x64.zip",
+            "hash": "ff86f6fe69a61281a7946a855b0fe195fd6c587836a875a3f9daddc4105d4cc3"
         }
     },
-    "autoupdate": {
-        "architecture": {
-            "64bit": {
-                "url": [
-                    "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v$version/Suwayomi-Server-v$version-windows-x64.zip",
-                    "https://github.com/ScoopInstaller/Extras/raw/master/scripts/suwayomi-server/suwayomi.ps1"
-                ]
-            }
-        }
-    }
+    "pre_install": [
+        "Invoke-WebRequest -Uri 'https://github.com/ScoopInstaller/Extras/raw/master/scripts/suwayomi-server/suwayomi.ps1' -OutFile \"$dir\\suwayomi.ps1\""
+    ]
 }
 ```
 
 In this example:
-- The first URL downloads the main application archive
-- The second URL downloads a PowerShell script used to run the application
-- Each URL has a corresponding hash for integrity verification
-- The autoupdate section maintains the same array structure
+- The main application archive is downloaded via the standard `url` field
+- The PowerShell wrapper script is downloaded during `pre_install`
+- Hash verification is applied to the main archive
+
+## Hash Format
+
+Hashes can be specified in several formats:
+- Plain SHA-256 (64 hex characters) - default and recommended
+- Plain SHA-512 (128 hex characters)
+- Prefixed format: `md5:...`, `sha1:...`, `sha256:...`, `sha512:...`
 
 ## Testing
 
-The bucket includes `Manifest-Array-Validation.Tests.ps1` which validates:
-- Array format correctness
-- Type checking (arrays contain strings)
-- Hash format validation
-- Count matching between URLs and hashes
-- Both architecture-specific and top-level arrays
-
-Run tests with:
+The standard Scoop bucket tests will validate your manifests. Run tests with:
 ```powershell
 .\bin\test.ps1
 ```
