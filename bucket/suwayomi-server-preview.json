@@ -24,13 +24,5 @@
         "url": "https://api.github.com/repos/Suwayomi/Suwayomi-Server-preview/releases/latest",
         "jsonpath": "$..browser_download_url",
         "regex": "Suwayomi-Server-v([\\d.]+)-windows-x64\\.zip"
-    },
-    "autoupdate": {
-        "architecture": {
-            "64bit": {
-                "url": "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v$version/Suwayomi-Server-v$version-windows-x64.zip",
-                "extract_dir": "Suwayomi-Server-v$version-windows-x64"
-            }
-        }
     }
 }
