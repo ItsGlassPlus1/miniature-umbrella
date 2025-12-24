@@ -23,7 +23,7 @@
     "checkver": {
         "url": "https://api.github.com/repos/Suwayomi/Suwayomi-Server-preview/releases/latest",
         "jsonpath": "$..browser_download_url",
-        "regex": "Suwayomi-Server-v([\\d.r]+)-windows-x64\\.zip"
+        "regex": "Suwayomi-Server-v([\\d.]+)-windows-x64\\.zip"
     },
     "autoupdate": {
         "architecture": {
