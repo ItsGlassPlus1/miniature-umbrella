@@ -38,6 +38,7 @@ When specifying multiple URLs and hashes, use JSON array syntax:
    - Plain SHA-256 (64 hex characters) - default
    - Plain SHA-512 (128 hex characters)
    - Prefixed format: `md5:...`, `sha1:...`, `sha256:...`, `sha512:...`
+4. **Autoupdate Consistency**: When using autoupdate, ensure all URLs are included in the autoupdate section
 
 ### Example: suwayomi-server-preview.json
 
@@ -55,6 +56,16 @@ When specifying multiple URLs and hashes, use JSON array syntax:
                 "f7d32050ace8bcb05005a65da1dae174e3eeca86a370e769639f5c0d03e61629"
             ]
         }
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": [
+                    "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v$version/Suwayomi-Server-v$version-windows-x64.zip",
+                    "https://github.com/ScoopInstaller/Extras/raw/master/scripts/suwayomi-server/suwayomi.ps1"
+                ]
+            }
+        }
     }
 }
 ```
@@ -63,6 +74,7 @@ In this example:
 - The first URL downloads the main application archive
 - The second URL downloads a PowerShell script used to run the application
 - Each URL has a corresponding hash for integrity verification
+- The autoupdate section maintains the same array structure
 
 ## Testing
 
