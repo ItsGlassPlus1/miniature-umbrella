@@ -20,7 +20,7 @@
         }
     },
     "bin": "suwayomi.ps1",
-    "checkver": "github"
+    "checkver": "github",
     "autoupdate": {
         "architecture": {
             "64bit": {
