@@ -10,16 +10,26 @@
         "64bit": {
             "url": [
                 "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v2.1.2038/Suwayomi-Server-v2.1.2038-windows-x64.zip",
-                "https://raw.githubusercontent.com/ItsGlassPlus1/miniature-umbrella/master/scripts/suwayomi.ps1"
+                "https://raw.githubusercontent.com/ItsGlassPlus1/miniature-umbrella/master/scripts/suwayomi.ps1",
+                "https://raw.githubusercontent.com/Suwayomi/Suwayomi-WebUI/master/public/favicon.ico#/suwayomi.ico"
             ],
             "hash": [
                 "ff86f6fe69a61281a7946a855b0fe195fd6c587836a875a3f9daddc4105d4cc3",
-                "ff4e047f8f823c5d37c782cda27a0a8dfddd578848ae548cbc3666d6f00927d2"
+                "ff4e047f8f823c5d37c782cda27a0a8dfddd578848ae548cbc3666d6f00927d2",
+                "0fd10c9ffde1c1d59ee0d5023ef6ab06f87539857d520b98801585925abbb87b"
             ],
             "extract_dir": "Suwayomi-Server-v2.1.2038-windows-x64"
         }
     },
     "bin": "suwayomi.ps1",
+    "shortcuts": [
+        [
+            "suwayomi.ps1",
+            "Suwayomi Server",
+            "",
+            "suwayomi.ico"
+        ]
+    ],
     "checkver": "github",
     "autoupdate": {
         "architecture": {
