@@ -21,7 +21,7 @@
             "extract_dir": "Suwayomi-Server-v2.1.2038-windows-x64"
         }
     },
-    "bin": "suwayomi.ps1",
+    "bin": "suwayomi-server.vbs",
     "shortcuts": [
         [
             "suwayomi-server.vbs",
