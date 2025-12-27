@@ -10,7 +10,7 @@
         "64bit": {
             "url": [
                 "https://github.com/Suwayomi/Suwayomi-Server-preview/releases/download/v2.1.2038/Suwayomi-Server-v2.1.2038-windows-x64.zip",
-                "https://raw.githubusercontent.com/ItsGlassPlus1/miniature-umbrella/master/scripts/suwayomi.ps1",
+                "https://raw.githubusercontent.com/ItsGlassPlus1/miniature-umbrella/master/scripts/suwayomi.vbs",
                 "https://raw.githubusercontent.com/Suwayomi/Suwayomi-WebUI/master/public/favicon.ico#/suwayomi.ico"
             ],
             "hash": [
